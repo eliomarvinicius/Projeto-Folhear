@@ -70,6 +70,7 @@ export class DetalhesPage implements OnInit {
         this.livro.set(obra);
         this.carregando.set(false);
         this.buscarAutor(obra);
+        this.buscarAno(id);
       },
       error: () => {
         this.erro.set(true);
@@ -88,6 +89,18 @@ export class DetalhesPage implements OnInit {
     }
     this.livrosService.getAutor(obra.autorId).subscribe({
       next: (nome) => this.livro.update((atual) => (atual ? { ...atual, autores: [nome] } : atual)),
+    });
+  }
+
+  // A data da obra às vezes é de uma reedição; a busca traz o ano da 1ª edição.
+  private buscarAno(id: string): void {
+    this.livrosService.buscar(`key:/works/${id}`, 1).subscribe({
+      next: (resultado) => {
+        const ano = resultado.livros[0]?.ano;
+        if (ano) {
+          this.livro.update((atual) => (atual ? { ...atual, ano } : atual));
+        }
+      },
     });
   }
 }
