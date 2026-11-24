@@ -1,0 +1,272 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Fontes locais: Newsreader (títulos) e DM Sans (corpo e interface) */
+@import '@fontsource/newsreader/500.css';
+@import '@fontsource/newsreader/600.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/700.css';
+
+/* Estilos do Folhear */
+h1,
+h2,
+h3,
+ion-title {
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+ion-toolbar {
+  --background: var(--tinta);
+  --color: #fff;
+  --border-width: 0;
+}
+
+ion-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+ion-back-button {
+  --color: #fff;
+}
+
+ion-tab-bar {
+  --background: #fff;
+  --border: 1px solid var(--linha);
+}
+
+ion-tab-button {
+  --color: #5b625d;
+  --color-selected: var(--verde);
+}
+
+.intro {
+  padding: 24px 16px 8px;
+}
+
+.intro h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.intro p,
+.contagem {
+  margin: 0;
+  color: #4b524d;
+  line-height: 1.5;
+}
+
+.contagem {
+  padding: 0 16px 8px;
+  font-size: 0.85rem;
+}
+
+.secao {
+  margin: 20px 16px 4px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.estado {
+  padding: 32px 16px;
+  color: #4b524d;
+  text-align: center;
+}
+
+.busca {
+  display: flex;
+  align-items: center;
+  padding: 8px 8px 0 4px;
+}
+
+.busca ion-searchbar {
+  --border-radius: 2px;
+  --box-shadow: none;
+  --background: var(--papel);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px 16px 0;
+}
+
+ion-chip {
+  --background: transparent;
+  --color: var(--tinta);
+  margin: 0 8px 8px 0;
+  border: 1px solid var(--linha);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+ion-chip.ativo {
+  --background: var(--verde);
+  --color: #fff;
+  border-color: var(--verde);
+}
+
+ion-list {
+  padding: 0;
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+  --border-color: var(--linha);
+  --padding-start: 16px;
+}
+
+ion-item.destaque {
+  --background: var(--verde-claro);
+}
+
+ion-item.destaque::part(native) {
+  border-left: 3px solid var(--verde);
+}
+
+ion-item h3 {
+  color: var(--tinta);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+ion-item p {
+  color: #4b524d;
+  font-size: 0.85rem;
+}
+
+ion-item p.rotulo,
+.ficha .rotulo {
+  color: var(--verde);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+ion-thumbnail.capa {
+  width: 56px;
+  height: 84px;
+  margin: 12px 16px 12px 0;
+  --border-radius: 2px;
+}
+
+ion-thumbnail.capa img {
+  object-fit: cover;
+}
+
+.sem-capa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--verde);
+  color: #fff;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1.8rem;
+}
+
+.favorito {
+  --color: #5b625d;
+}
+
+.favorito .cheio {
+  display: none;
+}
+
+.favorito.ativo {
+  --color: var(--verde);
+}
+
+.favorito.ativo .cheio {
+  display: inline-block;
+}
+
+.favorito.ativo .vazio {
+  display: none;
+}
+
+.ficha {
+  display: grid;
+  grid-template-columns: minmax(110px, 200px) 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 20px 16px;
+}
+
+.ficha h1 {
+  margin: 4px 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.ficha .autores {
+  margin: 0 0 12px;
+  color: #4b524d;
+}
+
+.capa-grande {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.capa-grande.sem-capa {
+  font-size: 4rem;
+}
+
+.descricao {
+  max-width: 65ch;
+  margin: 0;
+  padding: 0 16px 8px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+pagination-controls .ngx-pagination {
+  margin: 16px 0 24px;
+  padding: 0 12px;
+  text-align: center;
+}
+
+pagination-controls .ngx-pagination .current {
+  border-radius: 2px;
+  background: var(--verde);
+}
+
+pagination-controls .ngx-pagination a,
+pagination-controls .ngx-pagination button {
+  border-radius: 2px;
+  color: var(--tinta);
+}

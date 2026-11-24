@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Livros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="busca">
+    <ion-searchbar
+      placeholder="Título, autor ou assunto"
+      enterkeyhint="search"
+      [value]="texto"
+      (ionInput)="texto = $event.detail.value ?? ''"
+      (keyup.enter)="buscar()"
+    ></ion-searchbar>
+    <ion-button (click)="buscar()">Buscar</ion-button>
+  </div>
+
+  <div class="chips">
+    @for (assunto of assuntos; track assunto) {
+      <ion-chip
+        [class.ativo]="assunto === assuntoAtivo()"
+        [routerLink]="['/tabs/livros']"
+        [queryParams]="{ assunto: assunto }"
+        >{{ assunto | titlecase }}</ion-chip
+      >
+    }
+  </div>
+
+  @if (carregando()) {
+    <div class="estado"><ion-spinner name="dots"></ion-spinner><p>Buscando livros…</p></div>
+  } @else if (erro()) {
+    <div class="estado">
+      <p>Não foi possível carregar os livros. A Open Library pode estar lenta.</p>
+      <ion-button fill="outline" (click)="recarregar()">Tentar de novo</ion-button>
+    </div>
+  } @else if (livros().length === 0) {
+    <div class="estado"><p>Nenhum livro encontrado.</p></div>
+  } @else {
+    <h1 class="secao">
+      @if (termo()) {
+        Resultados para “{{ termo() }}”
+      } @else {
+        {{ assuntoAtivo() | titlecase }}
+      }
+    </h1>
+    <p class="contagem">{{ total() | number }} obras na Open Library. Mostrando as {{ livros().length }} primeiras.</p>
+
+    <ion-list lines="full">
+      @for (livro of livros() | paginate: { itemsPerPage: 12, currentPage: pagina() }; track livro.id) {
+        <app-livro-item [livro]="livro" />
+      }
+    </ion-list>
+
+    <pagination-controls
+      previousLabel="Anterior"
+      nextLabel="Próxima"
+      screenReaderPaginationLabel="Paginação"
+      screenReaderPageLabel="página"
+      screenReaderCurrentLabel="Você está na página"
+      [autoHide]="true"
+      [responsive]="true"
+      (pageChange)="pagina.set($event)"
+    ></pagination-controls>
+  }
+</ion-content>

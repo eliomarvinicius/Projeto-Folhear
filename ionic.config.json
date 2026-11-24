@@ -1,0 +1,7 @@
+{
+  "name": "folhear",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

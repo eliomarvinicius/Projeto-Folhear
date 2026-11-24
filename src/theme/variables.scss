@@ -1,0 +1,39 @@
+// Paleta do Folhear: verde, preto e branco.
+// Variações (shade/tint) geradas no Color Generator do Ionic.
+// https://ionicframework.com/docs/theming/colors
+
+:root {
+  --verde: #1f4d3a;
+  --verde-medio: #3e8f66;
+  --verde-claro: #dcebdd;
+  --tinta: #111713;
+  --papel: #f4f4ee;
+  --linha: #d8dbd2;
+
+  --ion-font-family: 'DM Sans', system-ui, sans-serif;
+  --ion-background-color: #fff;
+  --ion-background-color-rgb: 255, 255, 255;
+  --ion-text-color: #111713;
+  --ion-text-color-rgb: 17, 23, 19;
+
+  --ion-color-primary: #1f4d3a;
+  --ion-color-primary-rgb: 31, 77, 58;
+  --ion-color-primary-contrast: #fff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1b4433;
+  --ion-color-primary-tint: #355f4e;
+
+  --ion-color-dark: #111713;
+  --ion-color-dark-rgb: 17, 23, 19;
+  --ion-color-dark-contrast: #fff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #0f140f;
+  --ion-color-dark-tint: #292e2b;
+
+  --ion-color-light: #f4f4ee;
+  --ion-color-light-rgb: 244, 244, 238;
+  --ion-color-light-contrast: #000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d7d1;
+  --ion-color-light-tint: #f5f5f0;
+}

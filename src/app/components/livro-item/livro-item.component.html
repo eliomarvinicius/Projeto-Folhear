@@ -1,0 +1,20 @@
+<ion-item appDestaque button detail="false" lines="full" [routerLink]="['/detalhes', livro.id]">
+  <ion-thumbnail slot="start" class="capa">
+    @if (livro.capaId) {
+      <img [src]="capa" [alt]="'Capa de ' + livro.titulo" loading="lazy" />
+    } @else {
+      <span class="sem-capa">{{ livro.titulo.charAt(0) }}</span>
+    }
+  </ion-thumbnail>
+  <ion-label class="ion-text-wrap">
+    <h3>{{ livro.titulo }}</h3>
+    <p>{{ livro.autores | autores }}</p>
+    @if (livro.ano) {
+      <p class="rotulo">{{ livro.ano | seculo | uppercase }}</p>
+    }
+  </ion-label>
+  <ion-button slot="end" fill="clear" class="favorito" aria-label="Favoritar" [appFavorito]="livro">
+    <ion-icon slot="icon-only" class="vazio" name="heart-outline"></ion-icon>
+    <ion-icon slot="icon-only" class="cheio" name="heart"></ion-icon>
+  </ion-button>
+</ion-item>

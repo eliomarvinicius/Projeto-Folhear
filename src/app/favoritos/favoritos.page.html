@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="intro">
+    <h1>Para ler depois</h1>
+    <p>{{ favoritos().length }} {{ favoritos().length === 1 ? 'livro marcado' : 'livros marcados' }}.</p>
+  </section>
+
+  @if (favoritos().length) {
+    <ion-list lines="full">
+      @for (livro of favoritos(); track livro.id) {
+        <app-livro-item [livro]="livro" />
+      }
+    </ion-list>
+  } @else {
+    <div class="estado">
+      <p>Nenhum livro marcado ainda.</p>
+      <p>Toque no coração em qualquer livro para guardá-lo aqui.</p>
+      <ion-button fill="outline" routerLink="/tabs/livros">Ver livros</ion-button>
+    </div>
+  }
+</ion-content>

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text="Voltar"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (carregando()) {
+    <div class="estado"><ion-spinner name="dots"></ion-spinner></div>
+  } @else if (erro()) {
+    <div class="estado">
+      <p>Não foi possível carregar este livro.</p>
+      <ion-button fill="outline" (click)="carregar()">Tentar de novo</ion-button>
+    </div>
+  } @else if (livro(); as l) {
+    <section class="ficha">
+      @if (l.capaId) {
+        <img class="capa-grande" [src]="capa(l)" [alt]="'Capa de ' + l.titulo" />
+      } @else {
+        <div class="capa-grande sem-capa">{{ l.titulo.charAt(0) }}</div>
+      }
+      <div>
+        @if (l.ano) {
+          <p class="rotulo">{{ l.ano | seculo | uppercase }}</p>
+        }
+        <h1>{{ l.titulo }}</h1>
+        <p class="autores">{{ l.autores | autores }}</p>
+        <ion-button fill="outline" class="favorito" [appFavorito]="l">
+          <ion-icon slot="start" class="vazio" name="heart-outline"></ion-icon>
+          <ion-icon slot="start" class="cheio" name="heart"></ion-icon>
+          Favorito
+        </ion-button>
+      </div>
+    </section>
+
+    @if (l.descricao) {
+      <p class="descricao">{{ l.descricao | slice: 0 : 400 }}{{ l.descricao.length > 400 ? '…' : '' }}</p>
+    }
+
+    @if (l.assuntos.length) {
+      <div class="chips">
+        @for (assunto of l.assuntos; track assunto) {
+          <ion-chip>{{ assunto | titlecase }}</ion-chip>
+        }
+      </div>
+    }
+
+    @if (l.criadoEm) {
+      <p class="contagem">Registrada na Open Library em {{ l.criadoEm | date: 'dd/MM/yyyy' }}</p>
+    }
+  }
+</ion-content>

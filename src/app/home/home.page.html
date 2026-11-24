@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Folhear</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="intro">
+    <h1>Escolha um assunto e comece a folhear.</h1>
+    <p>Livros da Open Library, com capa, autor e detalhes. Marque os que quiser ler depois.</p>
+  </section>
+
+  <div class="chips">
+    @for (assunto of assuntos; track assunto) {
+      <ion-chip [routerLink]="['/tabs/livros']" [queryParams]="{ assunto: assunto }">{{ assunto | titlecase }}</ion-chip>
+    }
+  </div>
+
+  <h2 class="secao">Em destaque: {{ destaque | titlecase }}</h2>
+
+  @if (carregando()) {
+    <div class="estado"><ion-spinner name="dots"></ion-spinner></div>
+  } @else if (erro()) {
+    <div class="estado">
+      <p>Não foi possível carregar os livros.</p>
+      <ion-button fill="outline" (click)="carregar()">Tentar de novo</ion-button>
+    </div>
+  } @else {
+    <ion-list lines="full">
+      @for (livro of livros(); track livro.id) {
+        <app-livro-item [livro]="livro" />
+      }
+    </ion-list>
+  }
+</ion-content>
