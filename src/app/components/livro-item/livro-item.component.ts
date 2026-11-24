@@ -30,6 +30,7 @@ import { SeculoPipe } from '../../pipes/seculo.pipe';
 })
 export class LivroItemComponent {
   @Input({ required: true }) livro!: Livro;
+  @Input() numero?: number;
 
   constructor() {
     addIcons({ heart, heartOutline });

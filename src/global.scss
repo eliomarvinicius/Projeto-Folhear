@@ -40,15 +40,21 @@ ion-title {
   font-family: 'Newsreader', Georgia, serif;
 }
 
+ion-header.header-md {
+  box-shadow: none;
+}
+
 ion-toolbar {
   --background: var(--tinta);
   --color: #fff;
   --border-width: 0;
+  border-bottom: 3px solid var(--verde);
 }
 
 ion-title {
   font-size: 1.35rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 ion-back-button {
@@ -65,15 +71,74 @@ ion-tab-button {
   --color-selected: var(--verde);
 }
 
+ion-button {
+  --border-radius: 2px;
+  --box-shadow: none;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Coluna central: evita linhas esticadas em telas largas */
+.pagina {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sobretitulo {
+  margin: 0 0 8px;
+  color: var(--verde);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Home: faixa de abertura */
+.hero {
+  padding: 40px 0 44px;
+  background: var(--tinta);
+  color: #fff;
+}
+
+.hero .sobretitulo {
+  color: #9fcfb2;
+}
+
+.hero h1 {
+  max-width: 18ch;
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.hero .lead {
+  max-width: 52ch;
+  margin: 0;
+  color: #c7ccc8;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.hero .busca {
+  max-width: 620px;
+  padding-top: 24px;
+}
+
+.hero .busca ion-searchbar {
+  --background: #fff;
+}
+
 .intro {
-  padding: 24px 16px 8px;
+  padding: 32px 0 12px;
 }
 
 .intro h1 {
-  margin: 0 0 8px;
-  font-size: 2rem;
+  margin: 0 0 6px;
+  font-size: 2.2rem;
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
 .intro p,
@@ -84,47 +149,93 @@ ion-tab-button {
 }
 
 .contagem {
-  padding: 0 16px 8px;
+  padding-bottom: 12px;
   font-size: 0.85rem;
 }
 
 .secao {
-  margin: 20px 16px 4px;
-  font-size: 1.3rem;
+  margin: 32px 0 12px;
+  font-size: 1.45rem;
   font-weight: 600;
 }
 
+.titulo-lista {
+  margin-top: 24px;
+  margin-bottom: 4px;
+  font-size: 2rem;
+}
+
+.secao-topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ver-todos {
+  color: var(--verde);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ver-todos:hover {
+  text-decoration: underline;
+}
+
 .estado {
-  padding: 32px 16px;
+  padding: 40px 0;
   color: #4b524d;
   text-align: center;
+}
+
+.estado.vazio ion-icon {
+  color: var(--verde);
+  font-size: 48px;
+}
+
+.estado.vazio h2 {
+  margin: 12px 0 4px;
+  color: var(--tinta);
+  font-size: 1.5rem;
 }
 
 .busca {
   display: flex;
   align-items: center;
-  padding: 8px 8px 0 4px;
+  gap: 8px;
+  padding-top: 20px;
 }
 
 .busca ion-searchbar {
   --border-radius: 2px;
   --box-shadow: none;
   --background: var(--papel);
+  padding: 0;
+}
+
+.busca ion-button {
+  height: 44px;
+  margin: 0;
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  padding: 8px 16px 0;
+  padding-top: 12px;
 }
 
 ion-chip {
-  --background: transparent;
+  --background: #fff;
   --color: var(--tinta);
   margin: 0 8px 8px 0;
   border: 1px solid var(--linha);
-  border-radius: 4px;
+  border-radius: 2px;
   font-weight: 500;
+}
+
+ion-chip:hover {
+  border-color: var(--verde);
 }
 
 ion-chip.ativo {
@@ -133,6 +244,85 @@ ion-chip.ativo {
   border-color: var(--verde);
 }
 
+ion-chip.pequeno {
+  --background: var(--papel);
+  height: 28px;
+  font-size: 0.8rem;
+  border-color: transparent;
+}
+
+/* Home: estante de capas */
+.estante {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 136px;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 4px 0 24px;
+  scroll-snap-type: x mandatory;
+}
+
+@media (min-width: 900px) {
+  .estante {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(6, 1fr);
+    overflow: visible;
+  }
+}
+
+.livro-capa {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--tinta);
+  text-decoration: none;
+  scroll-snap-align: start;
+}
+
+.livro-capa img,
+.livro-capa .sem-capa {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgb(17 23 19 / 18%);
+  object-fit: cover;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.livro-capa.destaque img,
+.livro-capa.destaque .sem-capa {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgb(17 23 19 / 22%);
+}
+
+.livro-capa strong {
+  display: -webkit-box;
+  overflow: hidden;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.livro-capa.destaque strong {
+  color: var(--verde);
+}
+
+.livro-capa span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #5b625d;
+  font-size: 0.8rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Listas */
 ion-list {
   padding: 0;
   background: transparent;
@@ -141,7 +331,8 @@ ion-list {
 ion-item {
   --background: transparent;
   --border-color: var(--linha);
-  --padding-start: 16px;
+  --padding-start: 8px;
+  --inner-padding-end: 4px;
 }
 
 ion-item.destaque {
@@ -154,13 +345,20 @@ ion-item.destaque::part(native) {
 
 ion-item h3 {
   color: var(--tinta);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 ion-item p {
   color: #4b524d;
   font-size: 0.85rem;
+}
+
+ion-item p.autores-linha {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 ion-item p.rotulo,
@@ -171,11 +369,25 @@ ion-item p.rotulo,
   letter-spacing: 0.08em;
 }
 
+.numero {
+  width: 2.2ch;
+  margin-right: 16px;
+  color: #8a918b;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+ion-item.destaque .numero {
+  color: var(--verde);
+}
+
 ion-thumbnail.capa {
   width: 56px;
   height: 84px;
   margin: 12px 16px 12px 0;
   --border-radius: 2px;
+  box-shadow: 0 1px 2px rgb(17 23 19 / 18%);
 }
 
 ion-thumbnail.capa img {
@@ -214,30 +426,72 @@ ion-thumbnail.capa img {
   display: none;
 }
 
+/* Detalhes */
+.ficha-fundo {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--linha);
+  background: var(--papel);
+}
+
 .ficha {
   display: grid;
-  grid-template-columns: minmax(110px, 200px) 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(130px, 240px) 1fr;
+  gap: 32px;
   align-items: start;
-  padding: 20px 16px;
+}
+
+@media (max-width: 560px) {
+  .ficha {
+    grid-template-columns: 1fr;
+  }
+
+  .ficha .capa-grande {
+    width: 160px;
+  }
 }
 
 .ficha h1 {
-  margin: 4px 0;
-  font-size: 1.8rem;
+  margin: 4px 0 6px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
 .ficha .autores {
-  margin: 0 0 12px;
+  margin: 0 0 20px;
   color: #4b524d;
+  font-size: 1.1rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  margin: 0 0 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+}
+
+.meta dt {
+  color: #5b625d;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.meta dd {
+  margin: 2px 0 0;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1.2rem;
 }
 
 .capa-grande {
   width: 100%;
   aspect-ratio: 2 / 3;
   border-radius: 2px;
+  box-shadow: 0 10px 24px rgb(17 23 19 / 22%);
   object-fit: cover;
 }
 
@@ -248,25 +502,47 @@ ion-thumbnail.capa img {
 .descricao {
   max-width: 65ch;
   margin: 0;
-  padding: 0 16px 8px;
   font-family: 'Newsreader', Georgia, serif;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  line-height: 1.65;
 }
 
+.descricao::first-letter {
+  float: left;
+  margin: 6px 8px 0 0;
+  color: var(--verde);
+  font-size: 3.4rem;
+  font-weight: 600;
+  line-height: 0.85;
+}
+
+/* Paginação (ngx-pagination) */
 pagination-controls .ngx-pagination {
-  margin: 16px 0 24px;
-  padding: 0 12px;
+  margin: 24px 0 32px;
+  padding: 0;
   text-align: center;
 }
 
-pagination-controls .ngx-pagination .current {
+pagination-controls .ngx-pagination li {
+  margin: 0 2px;
   border-radius: 2px;
-  background: var(--verde);
 }
 
 pagination-controls .ngx-pagination a,
 pagination-controls .ngx-pagination button {
+  padding: 6px 12px;
+  border: 1px solid var(--linha);
   border-radius: 2px;
   color: var(--tinta);
+}
+
+pagination-controls .ngx-pagination a:hover {
+  border-color: var(--verde);
+  background: var(--verde-claro);
+}
+
+pagination-controls .ngx-pagination .current {
+  padding: 7px 13px;
+  border-radius: 2px;
+  background: var(--verde);
 }

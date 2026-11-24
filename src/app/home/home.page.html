@@ -5,31 +5,60 @@
 </ion-header>
 
 <ion-content>
-  <section class="intro">
-    <h1>Escolha um assunto e comece a folhear.</h1>
-    <p>Livros da Open Library, com capa, autor e detalhes. Marque os que quiser ler depois.</p>
+  <section class="hero">
+    <div class="pagina">
+      <p class="sobretitulo">Biblioteca aberta</p>
+      <h1>Escolha um assunto e comece a folhear.</h1>
+      <p class="lead">Capas, autores e descrições da Open Library. Marque o que quiser ler depois.</p>
+      <div class="busca">
+        <ion-searchbar
+          placeholder="Título, autor ou assunto"
+          enterkeyhint="search"
+          [value]="texto"
+          (ionInput)="texto = $event.detail.value ?? ''"
+          (keyup.enter)="buscar()"
+        ></ion-searchbar>
+        <ion-button (click)="buscar()">Buscar</ion-button>
+      </div>
+    </div>
   </section>
 
-  <div class="chips">
-    @for (assunto of assuntos; track assunto) {
-      <ion-chip [routerLink]="['/tabs/livros']" [queryParams]="{ assunto: assunto }">{{ assunto | titlecase }}</ion-chip>
+  <div class="pagina">
+    <h2 class="secao">Explore por assunto</h2>
+    <div class="chips">
+      @for (assunto of assuntos; track assunto.slug) {
+        <ion-chip [routerLink]="['/tabs/livros']" [queryParams]="{ assunto: assunto.slug }">{{
+          assunto.nome | titlecase
+        }}</ion-chip>
+      }
+    </div>
+
+    <div class="secao-topo">
+      <h2 class="secao">Em destaque: {{ nomeDestaque | titlecase }}</h2>
+      <a class="ver-todos" [routerLink]="['/tabs/livros']" [queryParams]="{ assunto: destaque }">Ver todos →</a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado"><ion-spinner name="dots"></ion-spinner></div>
+    } @else if (erro()) {
+      <div class="estado">
+        <p>Não foi possível carregar os livros.</p>
+        <ion-button fill="outline" (click)="carregar()">Tentar de novo</ion-button>
+      </div>
+    } @else {
+      <div class="estante">
+        @for (livro of livros(); track livro.id) {
+          <a class="livro-capa" appDestaque [routerLink]="['/detalhes', livro.id]">
+            @if (livro.capaId) {
+              <img [src]="capa(livro)" [alt]="'Capa de ' + livro.titulo" loading="lazy" />
+            } @else {
+              <span class="sem-capa">{{ livro.titulo.charAt(0) }}</span>
+            }
+            <strong>{{ livro.titulo }}</strong>
+            <span>{{ livro.autores | autores: 1 }}</span>
+          </a>
+        }
+      </div>
     }
   </div>
-
-  <h2 class="secao">Em destaque: {{ destaque | titlecase }}</h2>
-
-  @if (carregando()) {
-    <div class="estado"><ion-spinner name="dots"></ion-spinner></div>
-  } @else if (erro()) {
-    <div class="estado">
-      <p>Não foi possível carregar os livros.</p>
-      <ion-button fill="outline" (click)="carregar()">Tentar de novo</ion-button>
-    </div>
-  } @else {
-    <ion-list lines="full">
-      @for (livro of livros(); track livro.id) {
-        <app-livro-item [livro]="livro" />
-      }
-    </ion-list>
-  }
 </ion-content>

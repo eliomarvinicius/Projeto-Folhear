@@ -1,10 +1,20 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { IonButton, IonChip, IonContent, IonHeader, IonList, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular';
+import { Router, RouterLink } from '@angular/router';
+import {
+  IonButton,
+  IonChip,
+  IonContent,
+  IonHeader,
+  IonSearchbar,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular';
 
-import { LivroItemComponent } from '../components/livro-item/livro-item.component';
-import { ASSUNTOS, Livro } from '../models/livro';
+import { DestaqueDirective } from '../directives/destaque.directive';
+import { ASSUNTOS, Livro, nomeAssunto, urlCapa } from '../models/livro';
+import { AutoresPipe } from '../pipes/autores.pipe';
 import { LivrosService } from '../services/livros.service';
 
 @Component({
@@ -15,33 +25,50 @@ import { LivrosService } from '../services/livros.service';
     IonToolbar,
     IonTitle,
     IonContent,
+    IonSearchbar,
     IonChip,
-    IonList,
     IonSpinner,
     IonButton,
     RouterLink,
     TitleCasePipe,
-    LivroItemComponent,
+    AutoresPipe,
+    DestaqueDirective,
   ],
 })
 export class HomePage implements OnInit {
   assuntos = ASSUNTOS;
   destaque = 'fantasy';
+  nomeDestaque = nomeAssunto(this.destaque);
+  texto = '';
 
   livros = signal<Livro[]>([]);
   carregando = signal(true);
   erro = signal(false);
 
-  constructor(private livrosService: LivrosService) {}
+  constructor(
+    private livrosService: LivrosService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.carregar();
   }
 
+  capa(livro: Livro): string {
+    return urlCapa(livro.capaId ?? 0, 'M');
+  }
+
+  buscar(): void {
+    const q = this.texto.trim();
+    if (q) {
+      this.router.navigate(['/tabs/livros'], { queryParams: { q } });
+    }
+  }
+
   carregar(): void {
     this.carregando.set(true);
     this.erro.set(false);
-    this.livrosService.getPorAssunto(this.destaque, 6).subscribe({
+    this.livrosService.getPorAssunto(this.destaque, 12).subscribe({
       next: (resultado) => {
         this.livros.set(resultado.livros);
         this.carregando.set(false);

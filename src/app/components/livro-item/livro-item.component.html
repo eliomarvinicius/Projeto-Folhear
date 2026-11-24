@@ -1,4 +1,7 @@
 <ion-item appDestaque button detail="false" lines="full" [routerLink]="['/detalhes', livro.id]">
+  @if (numero) {
+    <span slot="start" class="numero">{{ numero < 10 ? '0' + numero : numero }}</span>
+  }
   <ion-thumbnail slot="start" class="capa">
     @if (livro.capaId) {
       <img [src]="capa" [alt]="'Capa de ' + livro.titulo" loading="lazy" />
@@ -8,7 +11,7 @@
   </ion-thumbnail>
   <ion-label class="ion-text-wrap">
     <h3>{{ livro.titulo }}</h3>
-    <p>{{ livro.autores | autores }}</p>
+    <p class="autores-linha">{{ livro.autores | autores }}</p>
     @if (livro.ano) {
       <p class="rotulo">{{ livro.ano | seculo | uppercase }}</p>
     }

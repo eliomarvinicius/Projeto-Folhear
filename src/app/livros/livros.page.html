@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content>
+  <div class="pagina">
   <div class="busca">
     <ion-searchbar
       placeholder="Título, autor ou assunto"
@@ -17,12 +18,12 @@
   </div>
 
   <div class="chips">
-    @for (assunto of assuntos; track assunto) {
+    @for (assunto of assuntos; track assunto.slug) {
       <ion-chip
-        [class.ativo]="assunto === assuntoAtivo()"
+        [class.ativo]="assunto.slug === assuntoAtivo()"
         [routerLink]="['/tabs/livros']"
-        [queryParams]="{ assunto: assunto }"
-        >{{ assunto | titlecase }}</ion-chip
+        [queryParams]="{ assunto: assunto.slug }"
+        >{{ assunto.nome | titlecase }}</ion-chip
       >
     }
   </div>
@@ -37,18 +38,20 @@
   } @else if (livros().length === 0) {
     <div class="estado"><p>Nenhum livro encontrado.</p></div>
   } @else {
-    <h1 class="secao">
+    <h1 class="secao titulo-lista">
       @if (termo()) {
         Resultados para “{{ termo() }}”
       } @else {
-        {{ assuntoAtivo() | titlecase }}
+        {{ nome(assuntoAtivo()) | titlecase }}
       }
     </h1>
-    <p class="contagem">{{ total() | number }} obras na Open Library. Mostrando as {{ livros().length }} primeiras.</p>
+    <p class="contagem">
+      {{ total() | number }} obras na Open Library · página {{ pagina() }} de {{ totalPaginas() }}
+    </p>
 
     <ion-list lines="full">
-      @for (livro of livros() | paginate: { itemsPerPage: 12, currentPage: pagina() }; track livro.id) {
-        <app-livro-item [livro]="livro" />
+      @for (livro of livros() | paginate: { itemsPerPage: porPagina, currentPage: pagina() }; track livro.id; let i = $index) {
+        <app-livro-item [livro]="livro" [numero]="(pagina() - 1) * porPagina + i + 1" />
       }
     </ion-list>
 
@@ -63,4 +66,5 @@
       (pageChange)="pagina.set($event)"
     ></pagination-controls>
   }
+  </div>
 </ion-content>

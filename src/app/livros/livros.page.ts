@@ -1,5 +1,5 @@
 import { DecimalPipe, TitleCasePipe } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -16,7 +16,7 @@ import { Observable, Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { LivroItemComponent } from '../components/livro-item/livro-item.component';
-import { ASSUNTOS, Livro, Resultado } from '../models/livro';
+import { ASSUNTOS, Livro, Resultado, nomeAssunto } from '../models/livro';
 import { LivrosService } from '../services/livros.service';
 
 @Component({
@@ -41,6 +41,8 @@ import { LivrosService } from '../services/livros.service';
 })
 export class LivrosPage implements OnInit {
   assuntos = ASSUNTOS;
+  nome = nomeAssunto;
+  porPagina = 12;
   texto = '';
 
   termo = signal('');
@@ -50,7 +52,7 @@ export class LivrosPage implements OnInit {
   pagina = signal(1);
   carregando = signal(false);
   erro = signal(false);
-
+  totalPaginas = computed(() => Math.max(1, Math.ceil(this.livros().length / this.porPagina)));
   private requisicao?: Subscription;
   constructor(
     private route: ActivatedRoute,
